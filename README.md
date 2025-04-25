@@ -1,6 +1,6 @@
 # SEARCH_DOCTOR
 
-A production-ready Next.js 13 web application for browsing and filtering a directory of doctors, with support for dynamic searching, filtering, and URL-driven state.
+A production-ready Next.js 15 web application for browsing and filtering a directory of doctors, with support for dynamic searching, filtering, and URL-driven state.
 
 
 ## Features
@@ -26,7 +26,7 @@ Follow these instructions to set up and run the project locally.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/BOT_DOCTOR.git
+   git clone https://github.com/Ankit15yadav/bajaj-finserv-frontend.gitBOT_DOCTOR.git
    cd BOT_DOCTOR
    ```
 
