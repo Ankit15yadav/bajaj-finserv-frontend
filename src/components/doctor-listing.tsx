@@ -14,11 +14,13 @@ export default function DoctorListing() {
     const [doctors, setDoctors] = useState<Doctor[]>([])
     const [loading, setLoading] = useState(true)
 
+    // Read current filter values from URL
     const searchQuery = searchParams.get("search") || ""
     const consultationType = searchParams.get("consultationType") || ""
     const specialties = searchParams.getAll("specialty")
     const sortBy = searchParams.get("sortBy") || ""
 
+    // Fetch doctors once on mount
     useEffect(() => {
         async function fetchDoctors() {
             try {
@@ -29,7 +31,7 @@ export default function DoctorListing() {
                 const data = (await res.json()) as Doctor[]
                 setDoctors(data)
             } catch (err) {
-                console.error(err)
+                console.error("Error fetching doctors:", err)
             } finally {
                 setLoading(false)
             }
@@ -37,27 +39,32 @@ export default function DoctorListing() {
         fetchDoctors()
     }, [])
 
+    // Compute filtered & sorted list whenever inputs change
     const filteredDoctors = useMemo<Doctor[]>(() => {
         let list = [...doctors]
 
+        // Search by name
         if (searchQuery) {
             list = list.filter((d) =>
                 d.name.toLowerCase().includes(searchQuery.toLowerCase())
             )
         }
 
+        // Consultation type filter
         if (consultationType === "video") {
             list = list.filter((d) => d.video_consult)
         } else if (consultationType === "clinic") {
             list = list.filter((d) => d.in_clinic)
         }
 
+        // Specialties filter
         if (specialties.length > 0) {
             list = list.filter((d) =>
                 d.specialities.some((s) => specialties.includes(s.name))
             )
         }
 
+        // Sorting
         if (sortBy === "fees") {
             list.sort((a, b) => {
                 const af = parseInt(a.fees.replace(/\D/g, ""), 10)
@@ -75,7 +82,7 @@ export default function DoctorListing() {
         return list
     }, [doctors, searchQuery, consultationType, specialties, sortBy])
 
-    // --- Update URL params without causing a navigation loop ---
+    // Push new filters into the URL (shallow replace to avoid full reload)
     const updateFilters = (
         newSearchQuery?: string,
         newConsultationType?: string,
@@ -102,11 +109,10 @@ export default function DoctorListing() {
 
         const nextQS = params.toString()
         if (nextQS === searchParams.toString()) {
-            // nothing changed → do not re-trigger
+            // No changes → do nothing
             return
         }
 
-        // shallow replace keeps it client-side and avoids full reload
         router.replace(`?${nextQS}`, undefined)
     }
 
@@ -116,6 +122,7 @@ export default function DoctorListing() {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {/* Filter sidebar */}
             <div className="md:col-span-1">
                 <FilterPanel
                     specialties={Array.from(
@@ -128,6 +135,7 @@ export default function DoctorListing() {
                 />
             </div>
 
+            {/* Main content */}
             <div className="md:col-span-3">
                 <SearchBar
                     searchQuery={searchQuery}
