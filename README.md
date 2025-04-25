@@ -26,7 +26,7 @@ Follow these instructions to set up and run the project locally.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Ankit15yadav/bajaj-finserv-frontend.gitBOT_DOCTOR.git
+   git clone https://github.com/Ankit15yadav/bajaj-finserv-frontend.git
    cd BOT_DOCTOR
    ```
 
