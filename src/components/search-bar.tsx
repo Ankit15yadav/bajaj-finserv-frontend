@@ -22,7 +22,6 @@ export default function SearchBar({
     const [showSuggestions, setShowSuggestions] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
 
-
     useEffect(() => {
         setQuery(searchQuery)
     }, [searchQuery])
@@ -103,7 +102,12 @@ export default function SearchBar({
                                     setShowSuggestions(false)
                                 }}
                             >
-                                {doc.name}
+                                <div className="font-medium text-gray-900">{doc.name}</div>
+                                {doc.specialities.length > 0 && (
+                                    <div className="text-sm text-gray-500 mt-0.5">
+                                        {doc.specialities.map((s) => s.name).join(', ')}
+                                    </div>
+                                )}
                             </li>
                         ))}
                     </ul>
