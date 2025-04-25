@@ -22,20 +22,18 @@ export default function SearchBar({
     const [showSuggestions, setShowSuggestions] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
 
-    // 1. Sync prop → local state
+
     useEffect(() => {
         setQuery(searchQuery)
     }, [searchQuery])
 
-    // 2. When query is empty, reset filters and suggestions
     useEffect(() => {
         if (query.trim() === "") {
-            updateFilters("")      // clear URL param
+            updateFilters("")
             setSuggestions([])
         }
     }, [query, updateFilters])
 
-    // 3. Generate suggestions when query is non-empty
     useEffect(() => {
         if (query.trim() === "") return
 
@@ -53,7 +51,6 @@ export default function SearchBar({
     const handleClear = () => {
         setQuery("")
         setShowSuggestions(false)
-        // updateFilters called by effect above
         inputRef.current?.focus()
     }
 

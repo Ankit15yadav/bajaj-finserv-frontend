@@ -20,7 +20,6 @@ export default function DoctorListing() {
     const specialties = searchParams.getAll("specialty")
     const sortBy = searchParams.get("sortBy") || ""
 
-    // Fetch doctors once on mount
     useEffect(() => {
         async function fetchDoctors() {
             try {
@@ -82,7 +81,6 @@ export default function DoctorListing() {
         return list
     }, [doctors, searchQuery, consultationType, specialties, sortBy])
 
-    // Push new filters into the URL (shallow replace to avoid full reload)
     const updateFilters = (
         newSearchQuery?: string,
         newConsultationType?: string,
@@ -109,7 +107,6 @@ export default function DoctorListing() {
 
         const nextQS = params.toString()
         if (nextQS === searchParams.toString()) {
-            // No changes → do nothing
             return
         }
 

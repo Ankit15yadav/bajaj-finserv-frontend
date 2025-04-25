@@ -11,7 +11,7 @@ interface DoctorCardProps {
 
 export default function DoctorCard({ doctor }: DoctorCardProps) {
     // Extract years of experience
-    const experienceYears = doctor.experience.match(/\d+/)?.[0] || ""
+    // const experienceYears = doctor.experience.match(/\d+/)?.[0] || ""
 
     return (
         <div className="bg-white rounded-lg shadow p-4" data-testid="doctor-card">
